@@ -1,17 +1,39 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_food_clone/learn/bloc/login_event.dart';
-import 'package:go_food_clone/learn/bloc/login_state.dart';
+import 'package:go_food_clone/learn/body/login_body.dart';
 import 'package:go_food_clone/learn/http/dio_client.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:go_food_clone/learn/response/login_response.dart';
 
-class LoginBloc extends Bloc<LoginEvent, LoginState>{
-  LoginBloc(): super(const LoginState()){
-    on<FetchLogin>(_mapEventToState);
-  }
+part 'login_bloc.freezed.dart';
 
-  DioClient client = DioClient();
+part 'login_event.dart';
 
-  void _mapEventToState(
-      FetchLogin event, Emitter<LoginState> emit,) async {
+part 'login_state.dart';
+
+class LoginBloc extends Bloc<LoginEvent, LoginState> {
+
+  final DioClient client = DioClient();
+
+  LoginBloc(): super(const _Initial()){
+      on<LoginEvent>((events, emit) async{
+        await events.when(
+            fetchLogin: (LoginBody body) async {
+              emit(const LoginState.isLoading());
+              final result = await client.login(body);
+              try{
+                emit(LoginState.login(body, result));
+              }catch (e){
+                emit(LoginState.isError(e as Error));
+              }
+            }
+        );
+      });
+    }
+
+// DioClient client = DioClient();
+
+/*void _mapEventToState(
+      LoginEvent event, Emitter<LoginState> emit,) async {
     emit(state.copyWith(status: LoginStatus.loading));
     try {
       final loginResponse = await client.login(event.body);
@@ -25,9 +47,9 @@ class LoginBloc extends Bloc<LoginEvent, LoginState>{
       print(stacktrace);
       emit(state.copyWith(status: LoginStatus.error));
     }
-  }
+  }*/
 
- /* @override
+/* @override
   Stream<LoginState> mapEventToState(
       LoginEvent event
       ) async* {
@@ -41,5 +63,4 @@ class LoginBloc extends Bloc<LoginEvent, LoginState>{
       }
     }
   }*/
-
 }

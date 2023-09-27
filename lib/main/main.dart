@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_food_clone/learn/bloc/login_bloc.dart';
-import 'package:go_food_clone/learn/bloc/login_event.dart';
-import 'package:go_food_clone/learn/bloc/login_state.dart';
 import 'package:go_food_clone/learn/body/login_body.dart';
 
 void main() {
@@ -75,17 +73,20 @@ class _LoginPageState extends State<LoginPage> {
 
   Widget _buildButtonLogin(BuildContext context) {
     return BlocConsumer<LoginBloc, LoginState>(listener: (context, state) {
-      if (state.status == LoginStatus.initial) {
-        print("LoginInitial");
-      } else if (state.status == LoginStatus.loading) {
-        print("LOADING");
-      } else if (state.status == LoginStatus.success) {
-        print("LoginLoadSuccess");
-      } else if (state.status == LoginStatus.error) {
-        print("LoginLoadFailure");
-      } else {
-        print("Yang lain: ${state.status}");
-      }
+      state.maybeMap(
+        orElse: () {
+          print("orElse");
+        },
+        isLoading: (e) {
+          print("isLoading");
+        },
+        isError: (e) {
+          print("isError");
+        },
+        login: (response) {
+          print("Succees: ${response.loginResponse?.meta.message}");
+        },
+      );
     }, builder: (context, state) {
       return ElevatedButton(
         style: ElevatedButton.styleFrom(backgroundColor: Colors.black38),
@@ -97,7 +98,7 @@ class _LoginPageState extends State<LoginPage> {
           LoginBody body = LoginBody(
               email: emailController.text.toString(),
               password: passwordController.text.toString());
-          BlocProvider.of<LoginBloc>(context).add(FetchLogin(body: body));
+          BlocProvider.of<LoginBloc>(context).add(LoginEvent.fetchLogin(body));
         },
       );
     });

@@ -8,8 +8,8 @@ part of 'login_response.dart';
 
 LoginResponse _$LoginResponseFromJson(Map<String, dynamic> json) =>
     LoginResponse(
-      meta: Meta.fromJson(json['meta'] as Map<String, dynamic>),
-      data: Data.fromJson(json['data'] as Map<String, dynamic>),
+      meta: RemoteLoginMeta.fromJson(json['meta'] as Map<String, dynamic>),
+      data: RemoteLoginData.fromJson(json['data'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$LoginResponseToJson(LoginResponse instance) =>
@@ -18,19 +18,22 @@ Map<String, dynamic> _$LoginResponseToJson(LoginResponse instance) =>
       'data': instance.data,
     };
 
-Data _$DataFromJson(Map<String, dynamic> json) => Data(
+RemoteLoginData _$RemoteLoginDataFromJson(Map<String, dynamic> json) =>
+    RemoteLoginData(
       accessToken: json['access_token'] as String,
       tokenType: json['token_type'] as String,
-      user: User.fromJson(json['user'] as Map<String, dynamic>),
+      user: RemoteLoginUser.fromJson(json['user'] as Map<String, dynamic>),
     );
 
-Map<String, dynamic> _$DataToJson(Data instance) => <String, dynamic>{
+Map<String, dynamic> _$RemoteLoginDataToJson(RemoteLoginData instance) =>
+    <String, dynamic>{
       'access_token': instance.accessToken,
       'token_type': instance.tokenType,
       'user': instance.user,
     };
 
-User _$UserFromJson(Map<String, dynamic> json) => User(
+RemoteLoginUser _$RemoteLoginUserFromJson(Map<String, dynamic> json) =>
+    RemoteLoginUser(
       id: json['id'] as int,
       name: json['name'] as String,
       email: json['email'] as String,
@@ -47,7 +50,8 @@ User _$UserFromJson(Map<String, dynamic> json) => User(
       profilePhotoUrl: json['profile_photo_url'] as String,
     );
 
-Map<String, dynamic> _$UserToJson(User instance) => <String, dynamic>{
+Map<String, dynamic> _$RemoteLoginUserToJson(RemoteLoginUser instance) =>
+    <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
       'email': instance.email,
@@ -64,13 +68,15 @@ Map<String, dynamic> _$UserToJson(User instance) => <String, dynamic>{
       'profile_photo_url': instance.profilePhotoUrl,
     };
 
-Meta _$MetaFromJson(Map<String, dynamic> json) => Meta(
+RemoteLoginMeta _$RemoteLoginMetaFromJson(Map<String, dynamic> json) =>
+    RemoteLoginMeta(
       code: json['code'] as int,
       status: json['status'] as String,
       message: json['message'] as String,
     );
 
-Map<String, dynamic> _$MetaToJson(Meta instance) => <String, dynamic>{
+Map<String, dynamic> _$RemoteLoginMetaToJson(RemoteLoginMeta instance) =>
+    <String, dynamic>{
       'code': instance.code,
       'status': instance.status,
       'message': instance.message,

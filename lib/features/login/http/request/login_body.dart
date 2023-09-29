@@ -3,18 +3,18 @@ import 'package:json_annotation/json_annotation.dart';
 part 'login_body.g.dart';
 
 @JsonSerializable()
-class LoginBody {
+class RemoteLoginBody {
   @JsonKey(name: "email")
   String email;
   @JsonKey(name: "password")
   String password;
 
-  LoginBody({
+  RemoteLoginBody({
     required this.email,
     required this.password,
   });
 
-  factory LoginBody.fromJson(Map<String, dynamic> json) => _$LoginBodyFromJson(json);
+  factory RemoteLoginBody.fromJson(Map<String, dynamic> json) => _$RemoteLoginBodyFromJson(json);
 
-  Map<String, dynamic> toJson() => _$LoginBodyToJson(this);
+  Map<String, dynamic> toJson() => _$RemoteLoginBodyToJson(this);
 }

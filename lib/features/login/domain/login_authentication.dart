@@ -1,15 +1,6 @@
-import 'package:go_food_clone/features/login/domain/login.dart';
+import 'package:go_food_clone/features/login/domain/login_body.dart';
+import 'package:go_food_clone/features/login/domain/login_result.dart';
 
-abstract class LoginAuthentication{
-  Future<LoginResult> login();
-}
-
-sealed class LoginResult{}
-class Success extends LoginResult {
-  final Login root;
-  Success(this.root);
-}
-class Failure extends LoginResult {
-  final Exception exception;
-  Failure(this.exception);
+abstract interface class LoginAuthentication{
+  Future<LoginResult> login(LoginBody body);
 }

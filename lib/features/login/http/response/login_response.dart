@@ -5,9 +5,9 @@ part 'login_response.g.dart';
 @JsonSerializable()
 class LoginResponse {
   @JsonKey(name: "meta")
-  Meta meta;
+  RemoteLoginMeta meta;
   @JsonKey(name: "data")
-  Data data;
+  RemoteLoginData data;
 
   LoginResponse({
     required this.meta,
@@ -20,27 +20,27 @@ class LoginResponse {
 }
 
 @JsonSerializable()
-class Data {
+class RemoteLoginData {
   @JsonKey(name: "access_token")
   String accessToken;
   @JsonKey(name: "token_type")
   String tokenType;
   @JsonKey(name: "user")
-  User user;
+  RemoteLoginUser user;
 
-  Data({
+  RemoteLoginData({
     required this.accessToken,
     required this.tokenType,
     required this.user,
   });
 
-  factory Data.fromJson(Map<String, dynamic> json) => _$DataFromJson(json);
+  factory RemoteLoginData.fromJson(Map<String, dynamic> json) => _$RemoteLoginDataFromJson(json);
 
-  Map<String, dynamic> toJson() => _$DataToJson(this);
+  Map<String, dynamic> toJson() => _$RemoteLoginDataToJson(this);
 }
 
 @JsonSerializable()
-class User {
+class RemoteLoginUser {
   @JsonKey(name: "id")
   int id;
   @JsonKey(name: "name")
@@ -70,7 +70,7 @@ class User {
   @JsonKey(name: "profile_photo_url")
   String profilePhotoUrl;
 
-  User({
+  RemoteLoginUser({
     required this.id,
     required this.name,
     required this.email,
@@ -87,13 +87,13 @@ class User {
     required this.profilePhotoUrl,
   });
 
-  factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
+  factory RemoteLoginUser.fromJson(Map<String, dynamic> json) => _$RemoteLoginUserFromJson(json);
 
-  Map<String, dynamic> toJson() => _$UserToJson(this);
+  Map<String, dynamic> toJson() => _$RemoteLoginUserToJson(this);
 }
 
 @JsonSerializable()
-class Meta {
+class RemoteLoginMeta {
   @JsonKey(name: "code")
   int code;
   @JsonKey(name: "status")
@@ -101,13 +101,13 @@ class Meta {
   @JsonKey(name: "message")
   String message;
 
-  Meta({
+  RemoteLoginMeta({
     required this.code,
     required this.status,
     required this.message,
   });
 
-  factory Meta.fromJson(Map<String, dynamic> json) => _$MetaFromJson(json);
+  factory RemoteLoginMeta.fromJson(Map<String, dynamic> json) => _$RemoteLoginMetaFromJson(json);
 
-  Map<String, dynamic> toJson() => _$MetaToJson(this);
+  Map<String, dynamic> toJson() => _$RemoteLoginMetaToJson(this);
 }
